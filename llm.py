@@ -1,23 +1,38 @@
 from openai import OpenAI
+from dotenv import load_dotenv
+import os 
+
+load_dotenv()
 
 client = OpenAI(
-    base_url='http://127.0.0.1:11434/v1',
+    base_url= os.getenv('API'),
     api_key='dummy_key'
 
 )
+message = []
 while True:
     n = input('user:')
-    responce = client.chat.completions.create(
-    model='gemma3:1b',
-    messages=[
-        {
+    message.append(
+                {
             'role':'user',
             'content':n
         }
-    ]
+    
     )
+    responce = client.chat.completions.create(
+    model='gemma3:1b',
+    messages=message
+    )
+    message.append(
+                {
+            'role':'assistent:',
+            'content':'responce.choices[0].message.content'
+        }
+    
+    )
+    
     print(f'assistent:',responce.choices[0].message.content)
-    if n == 'exit':
+    if n.lower() in  ['exit','bye','parshav']:
         break
 
 
