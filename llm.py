@@ -9,13 +9,14 @@ client = OpenAI(
     api_key='dummy_key'
 
 )
+
 message = []
 while True:
     n = input('user:')
     message.append(
                 {
             'role':'user',
-            'content':n
+            'content':n + 'after anser llm perticular topic ask qutionshort anser in 10 word '
         }
     
     )
